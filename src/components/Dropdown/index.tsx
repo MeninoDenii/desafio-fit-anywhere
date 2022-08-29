@@ -23,9 +23,6 @@ export const Dropdown: React.FC<dropdownProps> = ({
   alignments,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  console.log("options", options);
-
   return (
     <>
       <DropdownContainer onClick={() => setIsOpen((prevState) => !prevState)}>
