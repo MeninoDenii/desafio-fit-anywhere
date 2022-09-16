@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { HomePage, LoginPage, RegisterPage } from "../pages";
+import { HomePage, LoginPage, RegisterPage, ListTasks } from "../pages";
 
 const Router: React.FC = () => {
   return (
@@ -8,6 +8,7 @@ const Router: React.FC = () => {
       <Route path="/" element={<LoginPage />} />
       <Route path="register" element={<RegisterPage />} />
       <Route path="home" element={<HomePage />} />
+      <Route path="list-tasks" element={<ListTasks />} />
     </Routes>
   );
 };

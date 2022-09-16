@@ -4,23 +4,25 @@ import { getFirestore } from "firebase/firestore/lite";
 import { getDatabase } from "firebase/database";
 
 interface firebaseConfigProps {
-  apiKey: string;
-  authDomain: string;
-  projectId: string;
-  storageBucket: string;
-  messagingSenderId: string;
-  appId: string;
-  measurementId: string;
+  apiKey?: string;
+  authDomain?: string;
+  projectId?: string;
+  storageBucket?: string;
+  messagingSenderId?: string;
+  appId?: string;
+  measurementId?: string;
+  dataBaseURL?: string;
 }
 
 const firebaseConfig: firebaseConfigProps = {
-  apiKey: "AIzaSyBCLFpwqFmIqb9hL2_hGUQ8ZdFOjn5MgHY",
-  authDomain: "desafio-fit.firebaseapp.com",
-  projectId: "desafio-fit",
-  storageBucket: "desafio-fit.appspot.com",
-  messagingSenderId: "1006272565412",
-  appId: "1:1006272565412:web:25c5452597b534b4305631",
-  measurementId: "G-VRRVLFW5T2",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
+  dataBaseURL: process.env.REACT_APP_DATABASE_URL,
 };
 
 const app = initializeApp(firebaseConfig);
