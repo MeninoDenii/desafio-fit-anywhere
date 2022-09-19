@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { db, auth } from "../../services/firebase";
-import { ref, onValue } from "firebase/database";
+import { ref, child, get } from "firebase/database";
 import { onAuthStateChanged } from "firebase/auth";
 import { toast } from "react-toastify";
 
@@ -8,12 +8,25 @@ const ListTasks: React.FC = () => {
   const [userId, setUserId] = useState<string>("");
   const [tasks, setTasks] = useState<string[]>([]);
 
+  const dbRef = ref(db);
+
   useEffect(() => {
-    onValue(ref(db, "tasks/" + userId), (snapshot) => {
-      const data = snapshot.val().tasks;
-      setTasks(data);
-    });
-  }, [userId]);
+    // onValue(ref(db, "tasks/" + userId), (snapshot) => {
+    //   const data = snapshot.val().tasks;
+    //   setTasks(data);
+    // });
+    get(child(dbRef, `tasks/${userId}`))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          setTasks(snapshot.val().tasks);
+        } else {
+          toast.error("Não há tarefas cadastradas!");
+        }
+      })
+      .catch(() => {
+        toast.error("Erro ao listar tarefas!");
+      });
+  }, [dbRef, userId]);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {

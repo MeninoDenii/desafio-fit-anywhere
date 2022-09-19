@@ -13,6 +13,8 @@ const HomePage: React.FC = () => {
   const [newTask, setNewTask] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
 
+  const refDb = ref(db, "tasks/" + userId);
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -28,7 +30,7 @@ const HomePage: React.FC = () => {
   };
 
   const AddNewTask = useCallback(() => {
-    set(ref(db, "tasks/" + userId), {
+    set(refDb, {
       tasks,
     })
       .then(() => {
@@ -37,7 +39,7 @@ const HomePage: React.FC = () => {
       .catch(() => {
         toast.error("Erro ao adicionar tarefa!");
       });
-  }, [tasks, userId]);
+  }, [tasks, refDb]);
 
   return (
     <div>

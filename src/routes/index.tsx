@@ -1,6 +1,12 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { HomePage, LoginPage, RegisterPage, ListTasks } from "../pages";
+import {
+  HomePage,
+  LoginPage,
+  RegisterPage,
+  ListTasks,
+  UsersInfo,
+} from "../pages";
 
 const Router: React.FC = () => {
   return (
@@ -9,6 +15,7 @@ const Router: React.FC = () => {
       <Route path="register" element={<RegisterPage />} />
       <Route path="home" element={<HomePage />} />
       <Route path="list-tasks" element={<ListTasks />} />
+      <Route path="users-info" element={<UsersInfo />} />
     </Routes>
   );
 };
