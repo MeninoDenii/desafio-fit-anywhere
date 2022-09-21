@@ -1,16 +1,20 @@
 import React, { useCallback, useState, useEffect } from "react";
+import uuid from "react-uuid";
 import { db, auth } from "../../services/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { ref, set } from "firebase/database";
 import { toast } from "react-toastify";
 
-interface iTaskProps {
-  title: string[];
+interface iTask {
+  title: string;
+  id: string;
+  description: string;
+  duration: string;
 }
 
 const HomePage: React.FC = () => {
-  const [tasks, setTasks] = useState<iTaskProps[]>([]);
-  const [newTask, setNewTask] = useState<string>("");
+  const [userTasks, setUserTasks] = useState<iTask[]>([]);
+  const [tasks, setTasks] = useState({} as iTask);
   const [userId, setUserId] = useState<string>("");
 
   const refDb = ref(db, "tasks/" + userId);
@@ -25,13 +29,9 @@ const HomePage: React.FC = () => {
     });
   }, []);
 
-  const handleAddTask = (title: string) => {
-    setTasks((prevState) => [...prevState, { title: [title] }]);
-  };
-
   const AddNewTask = useCallback(() => {
     set(refDb, {
-      tasks,
+      userTasks,
     })
       .then(() => {
         toast.success("Tarefa adicionada com sucesso!");
@@ -39,7 +39,7 @@ const HomePage: React.FC = () => {
       .catch(() => {
         toast.error("Erro ao adicionar tarefa!");
       });
-  }, [tasks, refDb]);
+  }, [refDb, userTasks]);
 
   return (
     <div>
@@ -47,12 +47,33 @@ const HomePage: React.FC = () => {
         <label htmlFor="tarefas">Tarefas</label>
         <input
           type="text"
-          placeholder="Digite suas tarefas"
-          onChange={(e) => setNewTask(e.target.value)}
+          placeholder="Digite sua tarefa"
+          value={tasks?.title}
+          onChange={(e) =>
+            setTasks({ ...tasks, title: e.target.value, id: uuid() })
+          }
+        />
+        <input
+          type="text"
+          placeholder="Digite a descrição das tarefas"
+          onChange={(e) => setTasks({ ...tasks, description: e.target.value })}
+          value={tasks?.description}
+        />
+        <input
+          type="text"
+          placeholder="Digite a duração da tarefa"
+          onChange={(e) => setTasks({ ...tasks, duration: e.target.value })}
+          value={tasks?.duration}
         />
       </div>
-      <button onClick={() => handleAddTask(newTask)}>Adicionar a lista</button>
-      <button onClick={() => AddNewTask()}>Enviar</button>
+      <button onClick={() => AddNewTask()} disabled={!userTasks.length}>
+        Enviar
+      </button>
+      <button
+        onClick={() => setUserTasks((prevState) => [...prevState, tasks])}
+      >
+        Adicionar
+      </button>
     </div>
   );
 };

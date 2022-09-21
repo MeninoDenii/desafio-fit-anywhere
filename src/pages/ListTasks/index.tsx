@@ -11,14 +11,10 @@ const ListTasks: React.FC = () => {
   const dbRef = ref(db);
 
   useEffect(() => {
-    // onValue(ref(db, "tasks/" + userId), (snapshot) => {
-    //   const data = snapshot.val().tasks;
-    //   setTasks(data);
-    // });
     get(child(dbRef, `tasks/${userId}`))
       .then((snapshot) => {
         if (snapshot.exists()) {
-          setTasks(snapshot.val().tasks);
+          setTasks(snapshot.val().userTasks);
         } else {
           toast.error("Não há tarefas cadastradas!");
         }
@@ -44,7 +40,11 @@ const ListTasks: React.FC = () => {
         <h2>{`Tarefas do usuário: ${userId}`}</h2>
         <ol>
           {tasks?.map((task: any) => (
-            <li>{task?.title}</li>
+            <div style={{ marginBottom: "20px" }}>
+              <li>{task?.title}</li>
+              <li>{task?.description}</li>
+              <li>{task?.duration}</li>
+            </div>
           ))}
         </ol>
       </div>
