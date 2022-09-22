@@ -79,7 +79,7 @@ const UsersInfo: React.FC = () => {
       <h1>Listando os dados com o firestore</h1>
       <button onClick={() => handleGetUsersById()}>Listar</button>
       <div>
-        {usersInfo.map((user) => (
+        {usersInfo?.map((user) => (
           <div key={user.email} style={{ marginBottom: "10px" }}>
             <p>Nome: {user.firstName}</p>
             <p>Sobrenome: {user.lastName}</p>

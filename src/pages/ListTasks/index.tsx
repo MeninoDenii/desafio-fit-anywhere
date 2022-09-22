@@ -41,9 +41,9 @@ const ListTasks: React.FC = () => {
         <ol>
           {tasks?.map((task: any) => (
             <div style={{ marginBottom: "20px" }}>
-              <li>{task?.title}</li>
-              <li>{task?.description}</li>
-              <li>{task?.duration}</li>
+              <li>Titulo: {task?.title}</li>
+              <li>Descrição: {task?.description}</li>
+              <li>Duração: {task?.duration}</li>
             </div>
           ))}
         </ol>

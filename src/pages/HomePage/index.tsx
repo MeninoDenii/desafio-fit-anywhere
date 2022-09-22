@@ -29,12 +29,14 @@ const HomePage: React.FC = () => {
     });
   }, []);
 
-  const AddNewTask = useCallback(() => {
+  const addNewTask = useCallback(() => {
     set(refDb, {
       userTasks,
     })
       .then(() => {
-        toast.success("Tarefa adicionada com sucesso!");
+        toast.success("Tarefa enviada com sucesso!");
+        setUserTasks([]);
+        setTasks({} as iTask);
       })
       .catch(() => {
         toast.error("Erro ao adicionar tarefa!");
@@ -66,7 +68,7 @@ const HomePage: React.FC = () => {
           value={tasks?.duration}
         />
       </div>
-      <button onClick={() => AddNewTask()} disabled={!userTasks.length}>
+      <button onClick={() => addNewTask()} disabled={!userTasks.length}>
         Enviar
       </button>
       <button
