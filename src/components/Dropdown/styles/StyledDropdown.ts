@@ -10,7 +10,7 @@ export const DropdownContainer = styled.div`
   cursor: pointer;
   &:hover {
     filter: brightness(1.75);
-    transition: 0.3s;
+    transition: 0.5s;
   }
 `;
 
